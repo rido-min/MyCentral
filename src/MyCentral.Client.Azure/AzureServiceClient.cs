@@ -33,7 +33,11 @@ namespace MyCentral.Client.Azure
 
         public async Task<string> InvokeMethodAsync(string deviceId, string methodName, string? payload = null)
         {
-            var method = new CloudToDeviceMethod(methodName);
+            var method = new CloudToDeviceMethod(methodName)
+            {
+                ConnectionTimeout = TimeSpan.FromSeconds(2),
+                ResponseTimeout = TimeSpan.FromSeconds(5)
+            };
 
             if (payload is not null)
             {
